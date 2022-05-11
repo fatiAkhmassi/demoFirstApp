@@ -37,7 +37,7 @@ public class ProfileCont {
                 return  profileRepository.save(profile);
         }
 
-        @GetMapping("/{profileId}/posts")
+       /* @GetMapping("/{profileId}/posts")
         Profile getProfilePosts(
                 @PathVariable Integer profileId
         ){
@@ -45,5 +45,5 @@ public class ProfileCont {
                 Profile profile=profileRepository.findById(profileId).get();
                 //profile.assignPosts(posts);
                 return  profile;
-        }
+        }*/
 }

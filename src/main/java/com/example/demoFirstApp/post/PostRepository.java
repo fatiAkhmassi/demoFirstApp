@@ -7,5 +7,5 @@ import java.util.List;
 
 @RestResource
 public interface PostRepository extends JpaRepository<Post,Integer> {
-    public List<Post> findByProfileId(Integer profileId);
+    //public List<Post> findByProfileId(Integer profileId);
 }
