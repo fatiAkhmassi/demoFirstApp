@@ -10,6 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -31,8 +34,15 @@ public class DemoFirstAppApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		profileRepository.save(new Profile("Fati","Akhmassi", Date.from(LocalDate.of(1992, 9, 2).atStartOfDay(ZoneId.systemDefault()).toInstant())));
-		profileRepository.save(new Profile("Omar","Ait ben ali", Date.from(LocalDate.of(1995, 12, 8).atStartOfDay(ZoneId.systemDefault()).toInstant())));
+		Date d=new Date();
+		d.setDate(2);
+		d.setMonth(9);
+		d.setYear(1992);
+		profileRepository.save(new Profile("Fati","Akhmassi", d,"Female","123","Admin"));
+		d.setDate(8);
+		d.setMonth(12);
+		d.setYear(1995);
+		profileRepository.save(new Profile("Omar","Ait ben ali", d,"Male","123","Admin"));
 
 		postRepository.save(new Post("Post1","Commente 1",new Date()));
 		postRepository.save(new Post("Post2","Commente 2",new Date()));
@@ -47,4 +57,15 @@ public class DemoFirstAppApplication implements CommandLineRunner {
 		commentaireRepository.save(new Commentaire("Commente 6",new Date()));
 	}
 
+	@Bean
+	public WebMvcConfigurer corsConfigurer() {
+		return new WebMvcConfigurer() {
+			@Override
+			public void addCorsMappings(CorsRegistry registry) {
+				registry.addMapping("/**")
+						.allowedOrigins("*")
+						.allowedMethods("GET", "PUT", "POST", "PATCH", "DELETE", "OPTIONS");
+			}
+		};
+	}
 }

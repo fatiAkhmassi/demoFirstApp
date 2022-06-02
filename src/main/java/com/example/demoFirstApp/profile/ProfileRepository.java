@@ -5,5 +5,5 @@ import org.springframework.data.rest.core.annotation.RestResource;
 
 @RestResource
 public interface ProfileRepository extends JpaRepository<Profile,Integer> {
-
+    Profile findByFirstName(String firstName);
 }

@@ -1,4 +1,4 @@
-package com.example.demoFirstApp.user;
+package com.example.demoFirstApp.profile;
 
 import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,9 +25,9 @@ public class JwtUtil {
         return null;
     }
 
-    public String generateToken(String id,String userName,String role) {
+    public String generateToken(String id,String firstName,String role) {
         Claims claims = Jwts.claims().setSubject("auth-token");
-        claims.put("Username", userName);
+        claims.put("FirsteName", firstName);
         claims.put("Id", id);
         claims.put("Role", role);
         long nowMillis = System.currentTimeMillis();
@@ -61,7 +61,7 @@ public class JwtUtil {
         return Jwts.parser().setSigningKey(this.jwtSecret).parseClaimsJws(token).getBody();
     }
 
-    public String getUserIdFromToken(String jwtToken) {
+    public String getProfileIdFromToken(String jwtToken) {
         return getClaimFromToken(jwtToken, "Id");
     }
 }

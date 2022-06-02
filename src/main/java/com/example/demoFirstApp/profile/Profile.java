@@ -39,11 +39,17 @@ public class Profile {
     private String lastName;
     @Temporal(TemporalType.DATE)
     private Date birthDate;
+    private String gender;
+    private String passWord;
+    private  String role;
 
-    public Profile(String firstName, String lastName , Date birthDate){
+    public Profile(String firstName, String lastName , Date birthDate,String gender, String passWord, String role){
         this.firstName=firstName;
         this.lastName=lastName;
         this.birthDate=birthDate;
+        this.gender=gender;
+        this.passWord=passWord;
+        this.role=role;
     }
 
     public void setPosts(Set<Post> posts) {

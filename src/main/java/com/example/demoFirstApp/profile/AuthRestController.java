@@ -1,4 +1,4 @@
-package com.example.demoFirstApp.user;
+package com.example.demoFirstApp.profile;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,33 +16,33 @@ public class AuthRestController {
     private JwtUtil jwtUtil;
 
     @Autowired
-    private UserRepository userRep;
+    private ProfileRepository profileRepository;
 
     @PostMapping(value = "/auth/register")
-    public ResponseEntity<Map<String,String>> register(@RequestBody User user) {
-        // save new user to db
-        User newUser = userRep.save(user);
-        String token = jwtUtil.generateToken(Long.toString(newUser.getId()), newUser.getUserName(),newUser.getRole());
+    public ResponseEntity<Map<String,String>> register(@RequestBody Profile profile) {
+        // save new Profile to db
+        Profile newProfile = profileRepository.save(profile);
+        String token = jwtUtil.generateToken(Long.toString(newProfile.getId()), newProfile.getFirstName(),newProfile.getRole());
         Map<String, String> res = new HashMap<>();
         res.put("token", token);
         return new ResponseEntity<Map<String, String>>(res, HttpStatus.OK);
     }
 
     @PostMapping(value = "/auth/login")
-    public ResponseEntity<Map<String,String>> login(@RequestBody User user) {
-        // get user by userName and password from db
-        User newUser = userRep.findByUserName(user.getUserName());
-        if(newUser == null) {
+    public ResponseEntity<Map<String,String>> login(@RequestBody Profile profile) {
+        // get Profile by firstName and password from db
+        Profile newProfile = profileRepository.findByFirstName(profile.getFirstName());
+        if(newProfile == null) {
             Map<String, String> res = new HashMap<String, String>();
-            res.put("message", "username not correct");
+            res.put("message", "firstName not correct");
             return new ResponseEntity<Map<String, String>>(res, HttpStatus.BAD_REQUEST);
         }
-        if(!user.getPassWord().equals(newUser.getPassWord())) {
+        if(!profile.getPassWord().equals(newProfile.getPassWord())) {
             Map<String, String> res = new HashMap<String, String>();
             res.put("message", "password not correct");
             return new ResponseEntity<Map<String, String>>(res, HttpStatus.BAD_REQUEST);
         }
-        String token = jwtUtil.generateToken(Long.toString(newUser.getId()), newUser.getUserName(),newUser.getRole());
+        String token = jwtUtil.generateToken(Long.toString(newProfile.getId()), newProfile.getFirstName(),newProfile.getRole());
         Map<String, String> res = new HashMap<String, String>();
         res.put("token", token);
         return new ResponseEntity<Map<String, String>>(res, HttpStatus.OK);

@@ -1,0 +1,25 @@
+server:
+  port: 8090
+spring:
+  datasource:
+    url: jdbc:h2:mem:Profile-db
+  h2:
+    console:
+      enabled: true
+  application:
+    gateway:
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedMethods:
+              - GET
+              - POST
+              - DELETE
+
+
+
+jwt:
+  secret: sdfsdfsdfjsdlfsdfkjsdflsdf
+  token:
+    validity: 120000
